@@ -6,13 +6,14 @@ import sys
 from dotenv import load_dotenv
 import os
 from typing import Any, Dict
-import openai
+#import openai
+from litellm import completion
 
 # load .env file
 load_dotenv()
 
 # get openai api key
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+#openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 # ------------------ helpers ------------------
 
@@ -39,7 +40,7 @@ def response_parser(response: Dict[str, Any]):
 
 
 def make_client(gpt_api_key: str):
-    return openai
+    return completion
 
 
 # ------------------ content generators ------------------
@@ -47,20 +48,8 @@ def make_client(gpt_api_key: str):
 
 def prompt(prompt: str, model: str = "gpt-4") -> str:
     # validate the openai api key - if it's not valid, raise an error
-    if not openai.api_key:
-        sys.exit(
-            """
 
-ERORR: OpenAI API key not found. Please export your key to OPENAI_API_KEY
-
-Example bash command:
-    export OPENAI_API_KEY=<your openai apikey>
-            """
-        )
-
-    openai_client = openai
-
-    response = openai_client.ChatCompletion.create(
+    response = completion(
         model=model,
         messages=[
             {

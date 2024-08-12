@@ -29,6 +29,7 @@ PROGRAMMING_FILE_EXTENSIONS = [
     ".go",
     ".rs",
     ".swift",
+    ".rb",
 ]
 
 
